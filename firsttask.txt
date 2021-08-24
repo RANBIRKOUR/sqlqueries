@@ -1,0 +1,113 @@
+1.Display a list of all property names and their property id’s for Owner Id: 1426. 
+
+
+select p.Name as [Property Name],o.PropertyId,o.OwnerId from dbo.Property p
+inner join dbo.OwnerProperty o
+on p.Id=o.PropertyId
+where OwnerId=1426
+
+2.Display the current home value for each property in question a). 
+
+select p.Name as [Property Name],o.PropertyId,o.OwnerId,v.Value from dbo.Property p
+inner join dbo.OwnerProperty o
+on p.Id=o.PropertyId
+inner join dbo.PropertyHomeValue v
+on v.PropertyId=o.PropertyId
+where OwnerId=1426 and v.IsActive='1'
+
+For each property in question
+a), return the following:                                                                      
+   Using rental payment amount, rental payment frequency, tenant start date
+   and tenant end date to write a query that returns the sum of all payments 
+   from start date to end date.
+
+select p.Name,
+op.PropertyId,
+tp.PaymentAmount,
+tp.StartDate,
+tp.EndDate,
+tpf.Code as Frequency_Type,
+(case tpf.Code
+when 'weekly' then sum(DATEDIFF(week,tp.StartDate,tp.EndDate)*tp.PaymentAmount)
+when 'fortnightly'then sum(DATEDIFF(week,tp.StartDate,tp.EndDate)/2*tp.PaymentAmount)
+when 'monthly'then sum(DATEDIFF(month,tp.StartDate,tp.EndDate)*tp.PaymentAmount)
+end)as sum_of_all_payments
+from dbo.Property p
+inner join dbo.TenantProperty tp on p.Id=tp.PropertyId
+inner join dbo.OwnerProperty op on p.Id=op.PropertyId
+inner join dbo.TenantPaymentFrequencies tpf on tp.PaymentFrequencyId=tpf.Id
+where op.OwnerId='1426'
+group by p.Name,op.PropertyId,tp.StartDate,tp.EndDate,tpf.Code,tp.PaymentAmount
+
+
+ 
+b).Display the yield. 
+
+
+select p.Name as [Property Name]
+,o.PropertyId
+,o.OwnerId
+,pf.Yield
+from dbo.Property p
+inner join dbo.OwnerProperty o
+on p.Id=o.PropertyId
+inner join dbo.PropertyFinance pf
+on p.Id=pf.PropertyId
+where OwnerId=1426
+
+
+4.Display all the jobs available in the marketplace 
+(jobs that owners have advertised for service suppliers). 
+
+select j.ProviderId,
+j.OwnerId,
+j.JobDescription,
+jm.JobId,
+spj.Name as 'Service'
+from dbo.Job j
+inner join dbo.ServiceProviderJobStatus spj on j.JobStatusId=spj.Id
+inner join dbo.JobMedia jm  on jm.JobId=j.Id
+where j.OwnerId is not null and spj.Name='open'
+
+5. Display all property names, current tenants first and last names 
+and rental payments per week/ fortnight/month for the properties in question a). 
+select*from dbo.Property
+select*from dbo.OwnerProperty
+select*from dbo.Person
+select*from dbo.TenantProperty
+select*from dbo.TenantPaymentFrequencies
+select*from dbo.PropertyRentalPayment
+
+
+
+select p.Name,
+o.OwnerId,
+tp.TenantId,
+per.FirstName,
+per.LastName,
+prp.Amount,
+prp.FrequencyType,
+tpf.Code as'Frequency'
+from dbo.Property p
+inner join dbo.OwnerProperty o on p.Id=o.PropertyId
+inner join dbo.TenantProperty tp on o.PropertyId=tp.PropertyId
+inner join dbo.Person per on tp.TenantId=per.Id
+inner join dbo.PropertyRentalPayment prp on p.Id=prp.PropertyId
+inner join dbo.TenantPaymentFrequencies tpf on prp.FrequencyType=tpf.Id
+where o.OwnerId='1426'
+
+
+SELECT Person.FirstName, Person.LastName, Property.Name AS [Property Name], Property.Bedroom, Property.Bathroom, Property.ParkingSpace, PropertyExpense.Amount, PropertyExpense.Date, PropertyExpense.Description, Property.AddressId AS [Property AddressId], 
+             Address.AddressId AS [Address AddressId], Address.Number, Address.Street, Address.Suburb, Address.City, Address.Region, Address.PostCode, Person.Id AS [Person Id], Property.Id AS [Property Id], PropertyRentalPayment.FrequencyType, OwnerProperty.OwnerId, 
+             PropertyExpense.PropertyId AS PropertyExpense_PropertyId, PropertyRentalPayment.PropertyId AS PropertyRentalPayment_PropertyId, OwnerProperty.PropertyId AS OwnerProperty_PropertyId, TenantPaymentFrequencies.Name AS TenantPaymentFrequencies_Name, 
+             TenantPaymentFrequencies.Id AS TenantPropertyFrequenciesId, PropertyRentalPayment.Amount AS RentalAmount
+FROM   Property LEFT OUTER JOIN
+             PropertyExpense ON Property.Id = PropertyExpense.PropertyId LEFT OUTER JOIN
+             Address ON Property.AddressId = Address.AddressId  INNER JOIN 
+             PropertyRentalPayment ON Property.Id = PropertyRentalPayment.PropertyId INNER JOIN
+             OwnerProperty ON Property.Id = OwnerProperty.PropertyId  inner join  
+			 Person on OwnerProperty.OwnerId=Person.Id INNER JOIN
+             TenantPaymentFrequencies ON PropertyRentalPayment.FrequencyType = TenantPaymentFrequencies.Id
+where Property.Id='5643'
+
+
