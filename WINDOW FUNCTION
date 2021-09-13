@@ -1,0 +1,50 @@
+WINDOW FUNCTION
+use AdventureWorks2014
+
+select*from Sales.SalesTerritory
+
+select TerritoryID,Name,SalesLastYear from Sales.SalesTerritory
+
+/* over() window function .
+It is the replacement of GROUP BY. It creates a window with multiple rows.*/
+
+select TerritoryID,Name,SalesLastYear,sum(SalesLastYear) over() as TotalSalesLastYear from Sales.SalesTerritory
+
+/* Partition by() window function.
+It is used to divide the result set from the query into data subsets.*/
+
+select TerritoryID,Name,SalesLastYear,sum(SalesLastYear) over(PARTITION BY Name) as TotalSalesLastYear 
+from Sales.SalesTerritory
+
+/*  WINDOW FUNCTION 
+ROW NUMBER
+RANK
+DENSERANK*/
+
+USE AdventureWorks2014;
+GO
+SELECT SalesOrderID, OrderDate, CustomerID, 
+	ROW_NUMBER() OVER(ORDER BY OrderDate) As RowNum,
+	RANK() OVER(ORDER BY OrderDate) As Rank,
+	DENSE_RANK() OVER(ORDER BY OrderDate) As DenseRnk
+	NTILE(9) OVER(ORDER BY OrderDate) As NTILENUM
+FROM Sales.SalesOrderHeader
+WHERE CustomerID = 11330;
+NTILE WINDOW FUNCTION DEMO
+USE Portfolio
+/* CREATE A NTILE_demo table*/
+CREATE TABLE NTILE_demo (
+ID INT NOT NULL );
+INSERT INTO NTILE_demo(ID)
+VALUES(1), (2), (3), (4), (5), (6), (7), (8), (9), (10);
+
+/*select all from NTILE_demo table*/
+SELECT * FROM NTILE_demo;
+
+/*Use NTILE() function to divide above rows into 3 groups */
+
+SELECT ID,
+NTILE (3) OVER (
+ORDER BY ID
+) Group_number
+FROM NTILE_demo;
