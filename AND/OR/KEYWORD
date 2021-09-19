@@ -1,0 +1,16 @@
+Use AdventureWorks2014
+/* Example of AND Keyword*/
+
+select Name,CountryRegionCode,TerritoryID
+from Person.StateProvince
+where CountryRegionCode='US'
+AND TerritoryID='1'
+AND Name='Oregon'
+
+/* Example of OR Keyword*/
+
+select Name,CountryRegionCode,TerritoryID
+from Person.StateProvince
+where CountryRegionCode='US'
+OR TerritoryID='1'
+OR Name='Oregon'
