@@ -1,0 +1,54 @@
+use AdventureWorks2014
+
+/* select all from Production.Product*/
+select * from Production.Product
+
+/* Example of 'BETWEEN' operator*/
+select Name, SellStartDate as Date 
+from Production.Product
+where SellStartDate between '2011-05-30' and '2013-05-30'
+
+/* Example of 'LIKE' operator*/
+select Name,StandardCost,Color
+from Production.Product
+where Name like '%Washer%'
+
+/* Example of 'IN' operator*/
+select Name,ListPrice 
+from Production.Product
+where Name in ('Blade','LL Hub')
+
+/* Example of 'NOT' operator*/
+select Name,ListPrice 
+from Production.Product
+where Name  NOT in ('Blade','LL Hub')
+
+/*Example of '=' operator*/
+select Name,StandardCost,ListPrice,Color 
+from Production.Product
+where Color='Red'
+
+/*Example of '<>' operator*/
+select Name,StandardCost,ListPrice,Color 
+from Production.Product
+where Color<>'Red'
+
+/*Example of '<' operator*/
+select ProductID,Name,ListPrice
+from Production.Product
+where ListPrice<1000
+
+/*Example of '>' operator*/
+select ProductID,Name,ListPrice
+from Production.Product
+where ListPrice>1000
+
+/*Example of '>=' operator*/
+select ProductID,Name,ListPrice
+from Production.Product
+where ListPrice>=1000
+
+/*Example of '<=' operator*/
+select ProductID,Name,ListPrice
+from Production.Product
+where ListPrice<=1000
