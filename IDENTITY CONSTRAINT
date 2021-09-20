@@ -1,0 +1,23 @@
+use ConstraintsDemo
+
+/*CREATING DEPARTMENT TABLE*/
+
+CREATE TABLE Department(
+
+	ID int IDENTITY(1,1) PRIMARY KEY,
+    FirstName varchar(25) NOT NULL,
+    LastName varchar(25),
+    Age int
+)
+
+-- Inserting values
+
+INSERT INTO  Department(FirstName, LastName, Age) VALUES ('Rahul', 'Kumar', 24);
+
+INSERT INTO Department (FirstName, LastName, Age) VALUES ('Aakash', 'Roy', 25);
+
+INSERT INTO Department(FirstName, LastName, Age) VALUES ('Nick', 'Chopra', 23);
+
+-- Fetching values
+
+SELECT * FROM Department;
