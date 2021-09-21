@@ -1,0 +1,8 @@
+use ConstraintsDemo
+
+select*from Student
+
+select*from Employee
+
+ALTER TABLE Employee
+ADD FOREIGN KEY(EmpID) references Student(StudentID)
