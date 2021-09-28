@@ -1,0 +1,42 @@
+use AdventureWorks2014
+
+/* Query to get details for 14 january,2009*/
+
+select LoginID,JobTitle,HireDate
+from HumanResources.Employee
+where HireDate='2009-01-14';
+
+/* Query to get details for 14 january,2009 using language neutral format*/
+
+select LoginID,JobTitle,HireDate
+from HumanResources.Employee
+where HireDate='20090114';
+
+/* Query to get details for 14 january,2009 using US based format*/
+
+select LoginID,JobTitle,HireDate
+from HumanResources.Employee
+where HireDate='01-14-2009';
+
+
+/*Query to report all employees with more than ten years of service*/
+
+SELECT  NationalIDNumber,
+        HireDate,
+         DATEDIFF(year, HireDate, GETDATE()) YearsOfService
+FROM    HumanResources.Employee
+WHERE   DATEDIFF(year, HireDate, GETDATE()) >= 10
+ORDER BY YearsOfService DESC
+
+/*Query to get all the details from Production.Product*/
+
+select*from Production.Product
+
+/*calculate the number of days into the future*/
+
+SELECT NAME,
+       DaysToManufacture,
+       GETDATE() as Today,
+       DATEADD(day, DaysToManufacture, GETDATE()) EarliestDate
+FROM   Production.Product
+WHERE  DaysToManufacture > 1
