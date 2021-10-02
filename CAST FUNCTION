@@ -1,0 +1,17 @@
+USE AdventureWorks2014
+/* Query to get  CurrencyRateID,CurrencyRateDate,AverageRate from Sales.CurrencyRate table*/
+
+select CurrencyRateID,
+       CurrencyRateDate,
+	   AverageRate 
+from Sales.CurrencyRate
+order by CurrencyRateDate asc
+
+/* Query to find AverageRate less than 10 of the year 2014 and onwards*/
+
+select CurrencyRateID,
+       YEAR(CurrencyRateDate) as CurrencyRateYear,
+	   cast(AverageRate as int) as AvgRate
+from Sales.CurrencyRate
+where YEAR(CurrencyRateDate)> 2013 and cast(AverageRate as int)<10
+order by YEAR(CurrencyRateDate) asc
