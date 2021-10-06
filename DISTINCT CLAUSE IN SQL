@@ -1,0 +1,14 @@
+use AdventureWorks2014
+select*from HumanResources.Department
+/*Query to get Name and  distict GroupName*/
+
+select DISTINCT GroupName 
+from HumanResources.Department
+
+/* Query to show distinct for multiple columns not supported*/
+
+select DISTINCT GroupName, Name as HumanResourcesName
+FROM HumanResources.Department
+
+select GroupName, Name as HumanResourcesName
+FROM HumanResources.Department
