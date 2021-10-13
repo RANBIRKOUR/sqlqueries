@@ -1,0 +1,24 @@
+use AdventureWorks2014
+/*Query to get top 100 rows FirstName,MiddleName,LastName from Preson.Person*/
+select  TOP 100 Title,
+            FirstName,
+			MiddleName,
+			LastName
+from Person.Person
+
+/*If the Title column of Person.Person is NULL then return the string “No Title Listed” and 
+If the MiddleName column of Person.Person is NULL then return the string “No Middle Name
+Listed”*/
+
+SELECT COALESCE(Title, 'No Title Listed') AS Title,
+       FirstName,
+       COALESCE(MiddleName,'No MiddleName') AS MiddleName,
+       LastName
+FROM Person.Person
+
+/*If the MiddleName column is NULL then return the FirstName and LastName concatenated. If
+the MiddleName is non-NULL then return the FirstName, MiddleName and LastName
+concatenated.*/
+SELECT COALESCE(FirstName + ' ' + MiddleName + ' ' + LastName,FirstName + ' ' + LastName) AS FullName
+FROM Person.Person
+
