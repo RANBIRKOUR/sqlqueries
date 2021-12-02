@@ -1,0 +1,19 @@
+QUERY:
+
+Return the SalesPersonID and TotalDue columns from Sales.SalesOrderHeader for all sales that do not have a NULL value in the SalesPersonID column and whose TotalDue value exceeds $70000.
+
+USE AdventureWorks2014
+
+SELECT  SalesPersonID,
+                TotalDue
+FROM     Sales.SalesOrderHeader
+WHERE  SalesPersonID IS NOT NULL
+AND        TotalDue > 70000;
+
+Find the top 100 rows from Production.Product where the ListPrice is not equal to 0.00
+
+USE AdventureWorks2014
+
+SELECT TOP 100	*
+FROM    Production.Product
+WHERE  ListPrice <> 0.00;
